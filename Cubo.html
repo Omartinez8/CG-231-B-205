@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eejemplo animación 1</title>
+    <style rel="stylesheet" type="text/css">
+        body {
+          margin: 0 auto;
+          padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script>
+
+    <script>
+         var WIDTH = window.innerWidth;
+        var HEIGHT = window.innerHeight;
+        //creating scene
+        var scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x2a3b4c);
+        
+        var size = 150;
+        var divisions = 160;
+        var axesHelper = new THREE.AxesHelper(1000);
+        scene.add(axesHelper);
+        
+        //GRILLA
+        const gridHelper = new THREE.GridHelper(size, divisions);
+        scene.add(gridHelper);
+
+        var camera = new THREE.PerspectiveCamera(80, WIDTH / HEIGHT);
+        camera.position.z = 8;
+        camera.position.x = -1.2;
+        camera.position.y = 2;
+
+        camera.rotation.set(0, -0.5, 0);
+
+        var l = 1;
+
+        //renderer
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        //add geometry
+        var geometry = new THREE.BoxGeometry(l,l,l);
+        var material = new THREE.MeshBasicMaterial({color: 0x00f0f0});
+        var cube = new THREE.Mesh(geometry, material);
+       
+        //cubo #2
+        var geometry = new THREE.BoxGeometry(l,l,l);
+        var material = new THREE.MeshBasicMaterial({color: 0x0088ff});
+        var cube2 = new THREE.Mesh(geometry, material);
+        
+
+        //cube3
+        var geometry1 = new THREE.BoxGeometry(l,l,l);
+        var material = new THREE.MeshBasicMaterial({color: 0xff6600});
+        var cube3 = new THREE.Mesh(geometry1, material);
+        
+
+        document.addEventListener('keydown', function(event) {
+            switch(event.keyCode) {
+
+                case 49: //  CUBO 1
+                scene.add(cube);
+                break;
+
+                case 50: // CUBO 2
+                scene.add(cube2);
+                break;
+
+                case 51: // CUBO 3
+                scene.add(cube3);
+                break;
+                
+                case 81: // ESCALADO CUBO 2 (letra  Q )
+                cube2.scale.x=l/2
+                cube2.scale.y=l/2
+                cube2.scale.z=l/2
+                break;
+
+                case 87: // TRASLACION 2 (letra W)
+                cube2.position.y+=l*3/4
+                break;
+
+                case 69: // ESCALADO CUBO 3 (letra E)
+                cube3.scale.x=l/4
+                cube3.scale.y=l/4
+                cube3.scale.z=l/4
+                break;
+                
+                case 82: // trasladar cubo#3 (letra r)
+                cube3.position.y+=l*9/8
+                
+                break;
+            }
+        });
+
+        
+
+
+        
+        //animation
+        var animate = function(){
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+            
+        }
+
+        animate();
+
+    </script>
+
+</body>
+</html>
